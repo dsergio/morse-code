@@ -40,17 +40,17 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		SCANNING
 	}
 	
-	public enum MorseChar {
-		DOT,
-		DASH
+	public enum SIG {
+		DIT,
+		DAH
 	}
 	int unit = 250;
 	
-	int dotMin = 0;
-	int dotMax = dotMin + unit;
+	int ditMin = 0;
+	int ditMax = ditMin + unit;
 	
-	int dashMin = dotMax + 1;
-	int dashMax = dashMin + 3 * unit;
+	int dahMin = ditMax + 1;
+	int dahMax = dahMin + 3 * unit;
 	int letterPause = 3 * unit;
 	int wordPause = 7 * unit;
 	
@@ -100,8 +100,8 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<br><br>--------------------- <u>DEBUG</u>";
 		s += "<br>" + "InitLevel: " + initLevel;
 		s += "<br>" + "unit: " + unit + " ms";
-		s += "<br>" + "dit: " + dotMin + "-" + dotMax + " ms";
-		s += "<br>" + "dah: " + dashMin + "-" + dashMax + " ms";
+		s += "<br>" + "dit: " + ditMin + "-" + ditMax + " ms";
+		s += "<br>" + "dah: " + dahMin + "-" + dahMax + " ms";
 		s += "<br>" + "letterPause: " + letterPause + " ms";
 		s += "<br>" + "wordPause: " + wordPause + " ms";
 		s += "<br>" + "Current Character: '" + c + "'";
@@ -163,7 +163,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					if (((endPause) - (startPause)) > wordPause && initLevel == 4 && scanState == ScanState.SCANNING) {
 						
 						System.out.println("wordPause triggered... words: " + words + " content: " + content + " press: " + press);
-						content.clear();
+						
 						
 						getCharacter();
 						if (c != 0) {
@@ -282,12 +282,12 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		}
 	}
 	
-	public MorseChar getM(int d) {
-		if (press.get(d) > dotMin && press.get(d) < dotMax) {
-			return MorseChar.DOT;
+	public SIG m(int d) {
+		if (press.get(d) > ditMin && press.get(d) < ditMax) {
+			return SIG.DIT;
 		}
-		if (press.get(d) > dashMin && press.get(d) < dashMax) {
-			return MorseChar.DASH;
+		if (press.get(d) > dahMin && press.get(d) < dahMax) {
+			return SIG.DAH;
 		}
 		return null;
 	}
@@ -298,89 +298,89 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		
 		switch (length) {
 		case 1:
-			if (getM(0) == MorseChar.DOT) { // .
+			if (m(0) == SIG.DIT) { // .
 				c = 'E';
-			} else if (getM(0) == MorseChar.DASH) { // -
+			} else if (m(0) == SIG.DAH) { // -
 				c = 'T';
 			}
 			break;
 		case 2:
-			if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH) { // .-
+			if (m(0) == SIG.DIT && m(1) == SIG.DAH) { // .-
 				c = 'A';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT) { // ..
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT) { // ..
 				c = 'I';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH) { // --
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH) { // --
 				c = 'M';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT) { // -.
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DIT) { // -.
 				c = 'N';
 			}
 			break;
 		case 3:
-			if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT) { // -..
+			if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DIT) { // -..
 				c = 'D';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT) { // --.
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DIT) { // --.
 				c = 'G';
-			}  else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH) { // -.-
+			}  else if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DAH) { // -.-
 				c = 'K';
-			}  else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH) { // ---
+			}  else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DAH) { // ---
 				c = 'O';
-			}  else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT) { // .-.
+			}  else if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DIT) { // .-.
 				c = 'R';
-			}  else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT) { // ...
+			}  else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT) { // ...
 				c = 'S';
-			}  else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH) { // ..-
+			}  else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DAH) { // ..-
 				c = 'U';
-			}  else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH) { // .--
+			}  else if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DAH) { // .--
 				c = 'W';
 			} 
 			break;
 		case 4:
-			if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT) { // -...
+			if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DIT) { // -...
 				c = 'B';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DOT) { // -.-.
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DAH && m(3) == SIG.DIT) { // -.-.
 				c = 'C';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DOT) { // ..-.
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DAH && m(3) == SIG.DIT) { // ..-.
 				c = 'F';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT) { // ....
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DIT) { // ....
 				c = 'H';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH) { // .---
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DAH) { // .---
 				c = 'J';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT) { // .-..
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DIT && m(3) == SIG.DIT) { // .-..
 				c = 'L';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DOT) { // .--.
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DIT) { // .--.
 				c = 'P';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DASH) { // --.-
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DIT && m(3) == SIG.DAH) { // --.-
 				c = 'Q';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DASH) { // ...-
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DAH) { // ...-
 				c = 'V';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DASH) { // -..-
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DAH) { // -..-
 				c = 'X';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH) { // -.--
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DAH && m(3) == SIG.DAH) { // -.--
 				c = 'Y';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT) { // --..
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DIT && m(3) == SIG.DIT) { // --..
 				c = 'Z';
 			}
 			break;
 		case 5:
-			if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH && getM(4) == MorseChar.DASH) { // .----
+			if (m(0) == SIG.DIT && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DAH && m(4) == SIG.DAH) { // .----
 				c = '1';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH && getM(4) == MorseChar.DASH) { // ..---
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DAH && m(3) == SIG.DAH && m(4) == SIG.DAH) { // ..---
 				c = '2';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DASH && getM(4) == MorseChar.DASH) { // ...--
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DAH && m(4) == SIG.DAH) { // ...--
 				c = '3';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT && getM(4) == MorseChar.DASH) { // ....-
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DIT && m(4) == SIG.DAH) { // ....-
 				c = '4';
-			} else if (getM(0) == MorseChar.DOT && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT && getM(4) == MorseChar.DOT) { // .....
+			} else if (m(0) == SIG.DIT && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DIT && m(4) == SIG.DIT) { // .....
 				c = '5';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DOT && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT && getM(4) == MorseChar.DOT) { // -....
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DIT && m(2) == SIG.DIT && m(3) == SIG.DIT && m(4) == SIG.DIT) { // -....
 				c = '6';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DOT && getM(3) == MorseChar.DOT && getM(4) == MorseChar.DOT) { // --...
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DIT && m(3) == SIG.DIT && m(4) == SIG.DIT) { // --...
 				c = '7';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DOT && getM(4) == MorseChar.DOT) { // ---..
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DIT && m(4) == SIG.DIT) { // ---..
 				c = '8';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH && getM(4) == MorseChar.DOT) { // ----.
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DAH && m(4) == SIG.DIT) { // ----.
 				c = '9';
-			} else if (getM(0) == MorseChar.DASH && getM(1) == MorseChar.DASH && getM(2) == MorseChar.DASH && getM(3) == MorseChar.DASH && getM(4) == MorseChar.DASH) { // -----
+			} else if (m(0) == SIG.DAH && m(1) == SIG.DAH && m(2) == SIG.DAH && m(3) == SIG.DAH && m(4) == SIG.DAH) { // -----
 				c = '0';
 			}
 		default:
