@@ -98,6 +98,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<br><br>--------------------- <u>STATE</u>";
 		s += "<br>" + "Current Scan State: " + scanState;
 		s += "<br><br>--------------------- <u>DEBUG</u>";
+		s += "<br>" + "InitLevel: " + initLevel;
 		s += "<br>" + "unit: " + unit + " ms";
 		s += "<br>" + "dit: " + dotMin + "-" + dotMax + " ms";
 		s += "<br>" + "dah: " + dashMin + "-" + dashMax + " ms";
