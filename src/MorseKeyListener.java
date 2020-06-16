@@ -23,6 +23,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	private List<Character> content;
 	private List<String> words;
 	private List<String> sentences;
+	private List<Double> sentenceWpm;
 	private ScanState scanState;
 	private long startTime;
 	private long endTime;
@@ -30,8 +31,9 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	private long endPause;
 	private long startScan;
 	private long endScan;
-	private int wpm = 0;
+	private double wpm = 0;
 	private boolean pressed;
+	private int modValue = 100000;
 	
 	public enum ScanState {
 		NOT_SCANNING,
@@ -58,17 +60,18 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		content = new ArrayList<Character>();
 		words = new ArrayList<String>();
 		sentences = new ArrayList<String>();
+		sentenceWpm = new ArrayList<Double>();
 		scanState = ScanState.NOT_SCANNING;
 		initLevel = 0;
 		this.label.setText(getMorseState("Enter trigger key:"));
 		addKeyListener(this);
 		
-		startTime = System.currentTimeMillis() % 100000;
-		endTime = System.currentTimeMillis() % 100000;
-		startPause = System.currentTimeMillis() % 100000;
-		endPause = System.currentTimeMillis() % 100000;
-		startScan = System.currentTimeMillis() % 100000;
-		endScan = System.currentTimeMillis() % 100000;
+		startTime = System.currentTimeMillis() % modValue;
+		endTime = System.currentTimeMillis() % modValue;
+		startPause = System.currentTimeMillis() % modValue;
+		endPause = System.currentTimeMillis() % modValue;
+		startScan = System.currentTimeMillis() % modValue;
+		endScan = System.currentTimeMillis() % modValue;
 	}
 	
 	public String getMorseState() {
@@ -98,11 +101,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<br>" + "Character Content: " + content.toString();
 		s += "<br>" + "Words: " + words.toString();
 		s += "<br><br>--------------------- <u>DEBUG</u>";
-		s += "<br>" + "unit: " + unit;
-		s += "<br>" + "dit: " + dotMin + "-" + dotMax;
-		s += "<br>" + "dah: " + dashMin + "-" + dashMax;
-		s += "<br>" + "letterPause: " + letterPause;
-		s += "<br>" + "wordPause: " + wordPause;
+		s += "<br>" + "unit: " + unit + " ms";
+		s += "<br>" + "dit: " + dotMin + "-" + dotMax + " ms";
+		s += "<br>" + "dah: " + dashMin + "-" + dashMax + " ms";
+		s += "<br>" + "letterPause: " + letterPause + " ms";
+		s += "<br>" + "wordPause: " + wordPause + " ms";
 		s += "<br>" + "key press duration data: " + press.toString();
 		s += "<br><br>--------------------- <u>OUTPUT</u>";
 		s += "<br>";
@@ -144,8 +147,8 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			if (key == trigger) {
 				
 				if (!pressed) {
-					startTime = System.currentTimeMillis() % 100000;
-					endPause = System.currentTimeMillis() % 100000;
+					startTime = System.currentTimeMillis() % modValue;
+					endPause = System.currentTimeMillis() % modValue;
 					
 //					System.out.println("(endPause - startPause): " + (endPause - startPause));
 					if (((endPause) - (startPause)) > letterPause) {
@@ -177,7 +180,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					label.setText(getMorseState("TD"));
 					
 					if (scanState == ScanState.NOT_SCANNING) {
-						startScan = System.currentTimeMillis() % 100000;
+						startScan = System.currentTimeMillis() % modValue;
 					}
 					scanState = ScanState.SCANNING;
 					pressed = true;
@@ -187,11 +190,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 				
 				if (scanState == ScanState.NOT_SCANNING) { // start scanning
 					scanState = ScanState.SCANNING;
-					startScan = System.currentTimeMillis() % 100000;
+					startScan = System.currentTimeMillis() % modValue;
 					label.setText(getMorseState());
 				} else if (scanState == ScanState.SCANNING) { // finished scanning
 					scanState = ScanState.NOT_SCANNING;
-					endScan = System.currentTimeMillis() % 100000;
+					endScan = System.currentTimeMillis() % modValue;
 					press.clear();
 					content.clear();
 					
@@ -212,7 +215,17 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 						sentences.add(sentence);
 					}
 					
-					wpm = words.size() / ( (int) (endScan - startScan));
+					System.out.println("startScan: " + startScan + " endScan: " + endScan + " words.size(): " + words.size());
+					
+					double wpmCurrentSentence = (double) (words.size() / ( (double) (endScan - startScan) / 1000)) * 60;
+					sentenceWpm.add(wpmCurrentSentence);
+					
+					double sum = 0;
+					for (Double d : sentenceWpm) {
+						sum += d;
+					}
+					wpm = sum / (double) sentenceWpm.size();
+					
 					
 					words.clear();
 					
@@ -247,8 +260,8 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (scanState == ScanState.SCANNING && pressed) {
-			endTime = System.currentTimeMillis() % 100000;
-			startPause = System.currentTimeMillis() % 100000;
+			endTime = System.currentTimeMillis() % modValue;
+			startPause = System.currentTimeMillis() % modValue;
 //			System.out.println("(endTime - startTime): " + (endTime - startTime));
 			press.add((endTime - startTime));
 			label.setText(getMorseState("TU"));
