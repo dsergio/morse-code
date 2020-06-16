@@ -163,6 +163,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					if (((endPause) - (startPause)) > wordPause && initLevel == 4 && scanState == ScanState.SCANNING) {
 						
 						System.out.println("wordPause triggered... words: " + words + " content: " + content + " press: " + press);
+						content.clear();
 						
 						getCharacter();
 						if (c != 0) {
