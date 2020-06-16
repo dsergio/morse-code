@@ -97,15 +97,15 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<br>" + "print: '" + print + "'";
 		s += "<br><br>--------------------- <u>STATE</u>";
 		s += "<br>" + "Current Scan State: " + scanState;
-		s += "<br>" + "Current Character: '" + c + "'";
-		s += "<br>" + "Character Content: " + content.toString();
-		s += "<br>" + "Words: " + words.toString();
 		s += "<br><br>--------------------- <u>DEBUG</u>";
 		s += "<br>" + "unit: " + unit + " ms";
 		s += "<br>" + "dit: " + dotMin + "-" + dotMax + " ms";
 		s += "<br>" + "dah: " + dashMin + "-" + dashMax + " ms";
 		s += "<br>" + "letterPause: " + letterPause + " ms";
 		s += "<br>" + "wordPause: " + wordPause + " ms";
+		s += "<br>" + "Current Character: '" + c + "'";
+		s += "<br>" + "Character Content: " + content.toString();
+		s += "<br>" + "Words: " + words.toString();
 		s += "<br>" + "key press duration data: " + press.toString();
 		s += "<br><br>--------------------- <u>OUTPUT</u>";
 		s += "<br>";
@@ -113,7 +113,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			s += str;
 		}
 		s += "<br><br>--------------------- <u>PERFORMANCE</u>";
-		s += "<br>" + "Words per miunte (WPM): " + wpm;
+		s += "<br>" + "Words per miunte (WPM): " + Math.round(wpm);
 		
 		s += "</html>";
 		return s;
@@ -142,7 +142,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			print = key;
 			label.setText(getMorseState("Initialization complete."));
 			initLevel++;
-		} else if (initLevel == 3) {
+		} else if (initLevel >= 3) {
 
 			if (key == trigger) {
 				
@@ -159,7 +159,10 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 						}
 						press.clear();
 					}
-					if (((endPause) - (startPause)) > wordPause) {
+					if (((endPause) - (startPause)) > wordPause && initLevel == 4 && scanState == ScanState.SCANNING) {
+						
+						System.out.println("wordPause triggered... words: " + words + " content: " + content + " press: " + press);
+						
 						getCharacter();
 						if (c != 0) {
 							content.add(c);
@@ -176,6 +179,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 							words.add(s);
 						}
 						
+						
 					}
 					label.setText(getMorseState("TD"));
 					
@@ -184,6 +188,10 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					}
 					scanState = ScanState.SCANNING;
 					pressed = true;
+					
+					if (initLevel == 3) {
+						initLevel++;
+					}
 				}
 				
 			} else if (key == startStopScan) {
@@ -255,6 +263,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 				label.setText(getMorseState("print"));
 			}
 		}
+		
 	}
 
 	@Override
