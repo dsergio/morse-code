@@ -122,7 +122,6 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<tr><td>" + "dah: " + "</td><td>" + dahMin + "-" + dahMax + " ms" + "</td><td>" + ((double)dahMin / 1000) + "-" + ((double)dahMax / 1000) + " s" + "</td></tr>";
 		s += "<tr><td>" + "letterPause: " + "</td><td>" + letterPause + " ms" + "</td><td>" + ((double)letterPause / 1000) + " s" + "</td></tr>";
 		s += "<tr><td>" + "wordPause: " + "</td><td>" + wordPause + " ms" + "</td><td>" + ((double)wordPause / 1000) + " s" + "</td></tr>";
-		s += "<tr><td>" + "Current Character: " + "</td><td>'" + c + "'" + "</td><td></td></tr>";
 		s += "<tr><td>" + "Character Content: " + "</td><td>" + content.toString() + "</td><td></td></tr>";
 		s += "<tr><td>" + "Words: " + "</td><td>" + words.toString() + "</td><td></td></tr>";
 		s += "<tr><td>" + "key press duration data: " + "</td><td>" + press.toString() + "</td><td>" + morse + "</td></tr>";
