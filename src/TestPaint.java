@@ -11,11 +11,13 @@ public class TestPaint {
 
 	public TestPaint() {
 		
+		Border border = new EmptyBorder(15, 15, 15, 15);
 		JLabel label = new JLabel();
 		JLabel labelHeading = new JLabel();
-		JLabel labelLookup = new JLabel(new ImageIcon(".\\lookup.png"));
+		ImageIcon image = new ImageIcon(".\\lookup.png");		
+		JLabel labelLookup = new JLabel(image);
 		JFrame morseFrame = new MorseKeyListener(label);
-		Border border = new EmptyBorder(15, 15, 15, 15);
+		
 		
 		String title = "-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.";		
 		String heading = "<html><h1>" + title + "</h1></html>";

@@ -18,6 +18,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	private char trigger = 0;
 	private char startStopScan = 0;
 	private char print = 0;
+	private char clear = 0;
 	private List<Long> press;
 	private Character c = 0;
 	private List<Character> content;
@@ -87,13 +88,16 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<li>Then hit 'start/stop' again.</li>";
 		s += "</ol>";
 		
-		if (!message.equals("")) {
+		if (message.equals("DOWN")) {
+			s += "<b><font color=blue>!! " + message + "</font></b>";
+		} else if (!message.equals("")) {
 			s += "<b><font color=red>!! " + message + "</font></b>";
 		}
 		s += "<br /><br /><b>INPUT KEY CONTROLS</b>";
 		s += "<br />" + "trigger: '" + trigger + "'";
 		s += "<br />" + "start/stop: '" + startStopScan + "'";
 		s += "<br />" + "print: '" + print + "'";
+		s += "<br />" + "clear: '" + clear + "'";
 		s += "<hr /><b>STATE</b>";
 		s += "<br />" + "Current Scan State: <font color=blue>" + scanState + "</font>";
 		s += "<hr /><b>DEBUG</b>";
@@ -145,11 +149,15 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			startStopScan = key;
 			label.setText(getMorseState("Enter print key"));
 			initLevel++;
-		}  else if (initLevel == 2 && key != trigger && key != startStopScan) {
+		} else if (initLevel == 2 && key != trigger && key != startStopScan) {
 			print = key;
+			label.setText(getMorseState("Enter clear key"));
+			initLevel++;
+		} else if (initLevel == 3 && key != trigger && key != startStopScan && key != print) {
+			clear = key;
 			label.setText(getMorseState("Initialization complete. --. ---"));
 			initLevel++;
-		} else if (initLevel >= 3) {
+		}  else if (initLevel >= 4) {
 
 			if (key == trigger) {
 				
@@ -166,7 +174,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 						}
 						press.clear();
 					}
-					if (((endPause) - (startPause)) > wordPause && initLevel == 4 && scanState == ScanState.SCANNING) {
+					if (((endPause) - (startPause)) > wordPause && initLevel == 5 && scanState == ScanState.SCANNING) {
 						
 						System.out.println("wordPause triggered... words: " + words + " content: " + content + " press: " + press);
 						
@@ -191,7 +199,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 						
 						
 					}
-					label.setText(getMorseState("TD"));
+					label.setText(getMorseState("DOWN"));
 					
 					if (scanState == ScanState.NOT_SCANNING) {
 						startScan = System.currentTimeMillis() % modValue;
@@ -199,7 +207,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					scanState = ScanState.SCANNING;
 					pressed = true;
 					
-					if (initLevel == 3) {
+					if (initLevel == 4) {
 						initLevel++;
 					}
 				}
@@ -271,6 +279,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 				
 				press.clear();
 				label.setText(getMorseState("print"));
+			} else if (key == clear) {
+				
+				sentences.clear();
+				sentenceWpm.clear();
+				label.setText(getMorseState("clear"));
 			}
 		}
 		
@@ -283,7 +296,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			startPause = System.currentTimeMillis() % modValue;
 //			System.out.println("(endTime - startTime): " + (endTime - startTime));
 			press.add((endTime - startTime));
-			label.setText(getMorseState("TU"));
+			label.setText(getMorseState("UP"));
 			pressed = false;
 			
 			
