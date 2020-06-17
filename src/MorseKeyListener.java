@@ -157,11 +157,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			initLevel++;
 		} else if (initLevel == 1 && key != trigger) {
 			startStopScan = key;
-			label.setText(getMorseState("Enter print key"));
+			label.setText(getMorseState("Enter print ( .--. .-. .. -. - ) key"));
 			initLevel++;
 		} else if (initLevel == 2 && key != trigger && key != startStopScan) {
 			print = key;
-			label.setText(getMorseState("Enter clear key"));
+			label.setText(getMorseState("Enter clear ( -.-. .-.. . .- .-. ) key"));
 			initLevel++;
 		} else if (initLevel == 3 && key != trigger && key != startStopScan && key != print) {
 			clear = key;
