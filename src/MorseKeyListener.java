@@ -99,7 +99,9 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "</ol>";
 		
 		if (message.equals("DOWN")) {
-			s += "<b><font color=blue>!! " + message + "</font></b>";
+			s += "<b><font color=blue>!! " + message + " -.. --- .-- -.</font></b>";
+		} else if (message.equals("UP")) {
+			s += "<b><font color=red>!! " + message + " ..- .--.</font></b>";
 		} else if (!message.equals("")) {
 			s += "<b><font color=red>!! " + message + "</font></b>";
 		}
