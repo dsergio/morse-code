@@ -288,12 +288,12 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 				
 				
 				press.clear();
-				label.setText(getMorseState("print"));
+				label.setText(getMorseState(".--. .-. .. -. -"));
 			} else if (key == clear) {
 				
 				sentences.clear();
 				sentenceWpm.clear();
-				label.setText(getMorseState("clear"));
+				label.setText(getMorseState("-.-. .-.. . .- .-."));
 			}
 		}
 		
