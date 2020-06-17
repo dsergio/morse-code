@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
@@ -17,9 +16,9 @@ public class TestPaint {
 		JLabel labelLookup = new JLabel(new ImageIcon(".\\lookup.png"));
 		JFrame morseFrame = new MorseKeyListener(label);
 		Border border = new EmptyBorder(15, 15, 15, 15);
-		JButton saveButton = new JButton("Save");
 		
-		String heading = "<html><h1>-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.</h1></html>";
+		String title = "-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.";		
+		String heading = "<html><h1>" + title + "</h1></html>";
 		
 		labelHeading.setText(heading);
 		labelHeading.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
@@ -34,10 +33,9 @@ public class TestPaint {
 		morseFrame.add(labelHeading, BorderLayout.PAGE_START);
 		morseFrame.add(label, BorderLayout.CENTER);
 		morseFrame.add(labelLookup, BorderLayout.LINE_END);
-		morseFrame.add(saveButton, BorderLayout.PAGE_END);
 		
 		morseFrame.setSize(1100, 900);
-		morseFrame.setTitle("-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.");
+		morseFrame.setTitle(title);
 		morseFrame.setVisible(true);
 		
 		morseFrame.addWindowListener(new WindowAdapter() {

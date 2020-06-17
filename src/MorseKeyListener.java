@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -12,14 +13,13 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	JLabel label;
-	
+	private JLabel label;
 	private int initLevel;
 	private char trigger = 0;
 	private char startStopScan = 0;
 	private char print = 0;
 	private List<Long> press;
-	Character c = 0;
+	private Character c = 0;
 	private List<Character> content;
 	private List<String> words;
 	private List<String> sentences;
@@ -34,6 +34,13 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	private double wpm = 0;
 	private boolean pressed;
 	private int modValue = 100000;
+	private int unit = 250;
+	private int ditMin = 0;
+	private int ditMax = ditMin + unit;
+	private int dahMin = ditMax + 1;
+	private int dahMax = dahMin + 3 * unit;
+	private int letterPause = 3 * unit;
+	private int wordPause = 7 * unit;
 	
 	public enum ScanState {
 		NOT_SCANNING,
@@ -44,15 +51,6 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		DIT,
 		DAH
 	}
-	int unit = 250;
-	
-	int ditMin = 0;
-	int ditMax = ditMin + unit;
-	
-	int dahMin = ditMax + 1;
-	int dahMax = dahMin + 3 * unit;
-	int letterPause = 3 * unit;
-	int wordPause = 7 * unit;
 	
 	public MorseKeyListener(JLabel label) {
 		this.label = label;
@@ -63,7 +61,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		sentenceWpm = new ArrayList<Double>();
 		scanState = ScanState.NOT_SCANNING;
 		initLevel = 0;
-		this.label.setText(getMorseState("Enter trigger key:"));
+		this.label.setText(getMorseState("Enter trigger key"));
 		addKeyListener(this);
 		
 		startTime = System.currentTimeMillis() % modValue;
@@ -141,11 +139,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		
 		if (initLevel == 0) {
 			trigger = key;
-			label.setText(getMorseState("Enter scan start/stop key:"));
+			label.setText(getMorseState("Enter scan start/stop key"));
 			initLevel++;
 		} else if (initLevel == 1 && key != trigger) {
 			startStopScan = key;
-			label.setText(getMorseState("Enter print key:"));
+			label.setText(getMorseState("Enter print key"));
 			initLevel++;
 		}  else if (initLevel == 2 && key != trigger && key != startStopScan) {
 			print = key;
@@ -188,6 +186,8 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 						if (!s.equals("")) {
 							words.add(s);
 						}
+						
+						content.clear();
 						
 						
 					}
