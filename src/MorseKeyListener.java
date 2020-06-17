@@ -78,6 +78,16 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	}
 	
 	public String getMorseState(String message) {
+		
+		String morse = "";
+		for (Long l : press) {
+			if (l >= ditMin && l <= ditMax) {
+				morse += ".";
+			} else if (l >= dahMin && l <= dahMax) {
+				morse += "-";
+			}
+		}
+		
 		String s = "<html>";
 		s += "<p><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols, ";
 		s += "defined by key press time duration (short keypress or long keypress).</p>";
@@ -112,7 +122,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<tr><td>" + "Current Character: " + "</td><td>'" + c + "'" + "</td><td></td></tr>";
 		s += "<tr><td>" + "Character Content: " + "</td><td>" + content.toString() + "</td><td></td></tr>";
 		s += "<tr><td>" + "Words: " + "</td><td>" + words.toString() + "</td><td></td></tr>";
-		s += "<tr><td>" + "key press duration data: " + "</td><td>" + press.toString() + "</td><td></td></tr>";
+		s += "<tr><td>" + "key press duration data: " + "</td><td>" + press.toString() + "</td><td>" + morse + "</td></tr>";
 		s += "</table>";
 		
 		s += "<hr /><b>OUTPUT</b>";
