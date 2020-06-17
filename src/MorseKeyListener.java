@@ -80,11 +80,9 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	
 	public String getMorseState(String message) {
 		String s = "<html>";
-		s += "<br />-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.";
-		s += " (Morse Code Input App)";
-		s += "<br /><br /><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols, ";
-		s += "defined by key press time duration (short keypress or long keypress). ";
-		s += "<br /><br /><u>To write a sentence:</u><ol>";
+		s += "<p><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols, ";
+		s += "defined by key press time duration (short keypress or long keypress).</p>";
+		s += "<br /><u>To write a sentence</u>:<ol>";
 		s += "<li>Hit 'start/stop'.</li>";
 		s += "<li>Then use the 'trigger' key to input the words in the sentence.</li>";
 		s += "<li>Then hit 'print' to print the words.</li>";
@@ -101,16 +99,20 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		s += "<hr /><b>STATE</b>";
 		s += "<br />" + "Current Scan State: <font color=blue>" + scanState + "</font>";
 		s += "<hr /><b>DEBUG</b>";
-		s += "<br />" + "InitLevel: " + initLevel;
-		s += "<br />" + "unit: " + unit + " ms";
-		s += "<br />" + "dit: " + ditMin + "-" + ditMax + " ms";
-		s += "<br />" + "dah: " + dahMin + "-" + dahMax + " ms";
-		s += "<br />" + "letterPause: " + letterPause + " ms";
-		s += "<br />" + "wordPause: " + wordPause + " ms";
-		s += "<br />" + "Current Character: '" + c + "'";
-		s += "<br />" + "Character Content: " + content.toString();
-		s += "<br />" + "Words: " + words.toString();
-		s += "<br />" + "key press duration data: " + press.toString();
+		
+		s += "<table><tr><th>Configuration</th><th>Value</th><th></th></tr>";
+		s += "<tr><td>" + "InitLevel: " + "</td><td>" + initLevel + "</td><td></td></tr>";
+		s += "<tr><td>" + "unit: " + "</td><td>" + unit + " ms" + "</td><td>" + ((double) unit / 1000) + " s</td></tr>";
+		s += "<tr><td>" + "dit: " + "</td><td>" + ditMin + "-" + ditMax + " ms" + "</td><td>" + ((double)ditMin / 1000) + "-" + ((double)ditMax / 1000) + " s" + "</td></tr>";
+		s += "<tr><td>" + "dah: " + "</td><td>" + dahMin + "-" + dahMax + " ms" + "</td><td>" + ((double)dahMin / 1000) + "-" + ((double)dahMax / 1000) + " s" + "</td></tr>";
+		s += "<tr><td>" + "letterPause: " + "</td><td>" + letterPause + " ms" + "</td><td>" + ((double)letterPause / 1000) + " s" + "</td></tr>";
+		s += "<tr><td>" + "wordPause: " + "</td><td>" + wordPause + " ms" + "</td><td>" + ((double)wordPause / 1000) + " s" + "</td></tr>";
+		s += "<tr><td>" + "Current Character: " + "</td><td>'" + c + "'" + "</td><td></td></tr>";
+		s += "<tr><td>" + "Character Content: " + "</td><td>" + content.toString() + "</td><td></td></tr>";
+		s += "<tr><td>" + "Words: " + "</td><td>" + words.toString() + "</td><td></td></tr>";
+		s += "<tr><td>" + "key press duration data: " + "</td><td>" + press.toString() + "</td><td></td></tr>";
+		s += "</table>";
+		
 		s += "<hr /><b>OUTPUT</b>";
 		s += "<br />";
 		for (String str : sentences) {
