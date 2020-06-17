@@ -4,11 +4,10 @@
 
 A fun Morse code Input App. Test your Morse code skillz.
 
-Compile: `mvn package`
+* Compile: `mvn package`
+* Run: `java -cp .\target\b-morse-code-0.0.1-SNAPSHOT.jar Tester`
 
-Run: `java -cp .\target\b-morse-code-0.0.1-SNAPSHOT.jar Tester`
-
-Currently working on:
+### Current/future:
  * Bug fixes
  * Apply Observer design pattern
  * Web app
