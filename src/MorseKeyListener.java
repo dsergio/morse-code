@@ -90,12 +90,13 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 		
 		String s = "<html>";
 		s += "<p><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols, ";
-		s += "defined by key press time duration (short keypress or long keypress).</p>";
+		s += "defined by key press time duration (short keypress or long keypress). ";
+		s += "Hit 'print' to print the buffer. Hit 'start/stop' to start or stop. In the case of stopping, stop scanning and add the sentence to the output.</p>";
 		s += "<br /><u>To write a sentence</u>:<ol>";
 		s += "<li>Hit 'start/stop'.</li>";
-		s += "<li>Then use the 'trigger' key to input the words in the sentence.</li>";
+		s += "<li>Then use the 'trigger' key to input the words in the sentence by Morse code rules (see chart).</li>";
 		s += "<li>Then hit 'print' to print the words.</li>";
-		s += "<li>Then hit 'start/stop' again.</li>";
+		s += "<li>Then hit 'start/stop' again to stop scanning and output your sentence.</li>";
 		s += "</ol>";
 		
 		if (message.equals("DOWN")) {
