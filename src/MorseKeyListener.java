@@ -80,41 +80,47 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	
 	public String getMorseState(String message) {
 		String s = "<html>";
-		s += "<br>-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.";
+		s += "<br />-- --- .-. ... . ....... -.-. --- -.. . ....... .. -. .--. ..- - ....... .- .--. .--.";
 		s += " (Morse Code Input App)";
-		s += "<br><br><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols defined by key press time duration (short keypress or long keypress). ";
-		s += "To write a sentence:";
-		s += "<br> 1. Hit 'start/stop'.";
-		s += "<br> 2. Then use the 'trigger' key to input the words in the sentence.";
-		s += "<br> 3. Then hit 'print' to print the words.";
-		s += "<br> 4. Then hit 'start/stop' again.";
-		s += "<br><br>";
+		s += "<br /><br /><u>Instructions</u>: Use the 'trigger' key to input 'dit' or 'dah' symbols, ";
+		s += "defined by key press time duration (short keypress or long keypress). ";
+		s += "<br /><br /><u>To write a sentence:</u><ol>";
+		s += "<li>Hit 'start/stop'.</li>";
+		s += "<li>Then use the 'trigger' key to input the words in the sentence.</li>";
+		s += "<li>Then hit 'print' to print the words.</li>";
+		s += "<li>Then hit 'start/stop' again.</li>";
+		s += "</ol>";
 		
-		s += "<b>" + message + "</b>";
-		s += "<br><br>--------------------- <u>INPUT KEY CONTROLS</u>";
-		s += "<br>" + "trigger: '" + trigger + "'";
-		s += "<br>" + "start/stop: '" + startStopScan + "'";
-		s += "<br>" + "print: '" + print + "'";
-		s += "<br><br>--------------------- <u>STATE</u>";
-		s += "<br>" + "Current Scan State: " + scanState;
-		s += "<br><br>--------------------- <u>DEBUG</u>";
-		s += "<br>" + "InitLevel: " + initLevel;
-		s += "<br>" + "unit: " + unit + " ms";
-		s += "<br>" + "dit: " + ditMin + "-" + ditMax + " ms";
-		s += "<br>" + "dah: " + dahMin + "-" + dahMax + " ms";
-		s += "<br>" + "letterPause: " + letterPause + " ms";
-		s += "<br>" + "wordPause: " + wordPause + " ms";
-		s += "<br>" + "Current Character: '" + c + "'";
-		s += "<br>" + "Character Content: " + content.toString();
-		s += "<br>" + "Words: " + words.toString();
-		s += "<br>" + "key press duration data: " + press.toString();
-		s += "<br><br>--------------------- <u>OUTPUT</u>";
-		s += "<br>";
+		if (!message.equals("")) {
+			s += "<b><font color=red>!! " + message + "</font></b>";
+		}
+		s += "<br /><br /><b>INPUT KEY CONTROLS</b>";
+		s += "<br />" + "trigger: '" + trigger + "'";
+		s += "<br />" + "start/stop: '" + startStopScan + "'";
+		s += "<br />" + "print: '" + print + "'";
+		s += "<hr /><b>STATE</b>";
+		s += "<br />" + "Current Scan State: <font color=blue>" + scanState + "</font>";
+		s += "<hr /><b>DEBUG</b>";
+		s += "<br />" + "InitLevel: " + initLevel;
+		s += "<br />" + "unit: " + unit + " ms";
+		s += "<br />" + "dit: " + ditMin + "-" + ditMax + " ms";
+		s += "<br />" + "dah: " + dahMin + "-" + dahMax + " ms";
+		s += "<br />" + "letterPause: " + letterPause + " ms";
+		s += "<br />" + "wordPause: " + wordPause + " ms";
+		s += "<br />" + "Current Character: '" + c + "'";
+		s += "<br />" + "Character Content: " + content.toString();
+		s += "<br />" + "Words: " + words.toString();
+		s += "<br />" + "key press duration data: " + press.toString();
+		s += "<hr /><b>OUTPUT</b>";
+		s += "<br />";
 		for (String str : sentences) {
 			s += str;
 		}
-		s += "<br><br>--------------------- <u>PERFORMANCE</u>";
-		s += "<br>" + "Words per miunte (WPM): " + Math.round(wpm);
+		if (sentences.size() == 0) {
+			s += "<br />";
+		}
+		s += "<hr /><b>PERFORMANCE</b>";
+		s += "<br />" + "Words per miunte (WPM): " + Math.round(wpm);
 		
 		s += "</html>";
 		return s;
@@ -141,7 +147,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			initLevel++;
 		}  else if (initLevel == 2 && key != trigger && key != startStopScan) {
 			print = key;
-			label.setText(getMorseState("Initialization complete."));
+			label.setText(getMorseState("Initialization complete. --. ---"));
 			initLevel++;
 		} else if (initLevel >= 3) {
 
