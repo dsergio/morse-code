@@ -74,7 +74,11 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 	
 	public String getMorseState(String message) {
 		
+		// todo use stringbuilder
+		// StringBuilder b = new StringBuilder();
+		
 		String morse = "";
+		
 		for (Long l : press) {
 			if (l >= ditMin && l <= ditMax) {
 				morse += ".";
