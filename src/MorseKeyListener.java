@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -176,6 +177,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 					startTime = System.currentTimeMillis();
 					endPause = System.currentTimeMillis();
 					
+					this.getContentPane().setBackground(Color.ORANGE);
 //					System.out.println("(endPause - startPause): " + (endPause - startPause));
 					if (((endPause) - (startPause)) > letterPause) {
 						getCharacter();
@@ -311,6 +313,7 @@ public class MorseKeyListener extends JFrame implements KeyListener {
 			pressed = false;
 			
 			
+			this.getContentPane().setBackground(Color.WHITE);
 		}
 	}
 	
